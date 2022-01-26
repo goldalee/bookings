@@ -3,9 +3,9 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/config"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/models"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/render"
+	"github.com/goldalee/golangprojects/bookings/pkg/config"
+	"github.com/goldalee/golangprojects/bookings/pkg/models"
+	"github.com/goldalee/golangprojects/bookings/pkg/render"
 )
 
 //variable that uses the repository type

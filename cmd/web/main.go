@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/config"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/handlers"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/render"
+	"github.com/goldalee/golangprojects/bookings/pkg/config"
+	"github.com/goldalee/golangprojects/bookings/pkg/handlers"
+	"github.com/goldalee/golangprojects/bookings/pkg/render"
 )
 
 const portNumber = ":8080"

@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/config"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/handlers"
+	"github.com/goldalee/golangprojects/bookings/pkg/config"
+	"github.com/goldalee/golangprojects/bookings/pkg/handlers"
 )
 
 //I had to install pat router by typing in: go get github.com/bmizerany/pat
