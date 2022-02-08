@@ -30,6 +30,11 @@ func routes(app *config.AppConfig) http.Handler {
 	//mux.Use(WriteToConsole)
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
+	mux.Get("/generals", handlers.Repo.Generals)
+	mux.Get("/majors", handlers.Repo.Majors)
+	mux.Get("/search-availability", handlers.Repo.Availability)
+	mux.Get("/contact", handlers.Repo.Contact)
+
 	//routing/putting the picture on your page by creating a file server
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
