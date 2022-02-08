@@ -28,10 +28,10 @@
   </div>
 {{end}}
 
-{{define "js}}
+{{define "js"}}
 <script>
 
-    document.getElementById("colorButton").addEventListener("click", function () {
+    document.getElementById("check-availability-button").addEventListener("click", function () {
         let html = `
         <form id="check-availability-form" action="" method="post" novalidate class="needs-validation">
             <div class="form-row">
@@ -54,3 +54,4 @@
         //notifyModal("title", "<em>hello, world</em>", "success", "My text for the button")
     })
 </script>
+{{end}}
