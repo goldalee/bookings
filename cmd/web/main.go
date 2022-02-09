@@ -6,12 +6,12 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/goldalee/golangprojects/bookings/pkg/config"
-	"github.com/goldalee/golangprojects/bookings/pkg/handlers"
-	"github.com/goldalee/golangprojects/bookings/pkg/render"
+	"github.com/goldalee/golangprojects/bookings/internal/config"
+	"github.com/goldalee/golangprojects/bookings/internal/handlers"
+	"github.com/goldalee/golangprojects/bookings/internal/render"
 )
 
-const portNumber = ":8080"
+const portNumber = ":8081"
 
 var app config.AppConfig
 var session *scs.SessionManager

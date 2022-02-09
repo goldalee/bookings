@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/goldalee/golangprojects/bookings/pkg/config"
-	"github.com/goldalee/golangprojects/bookings/pkg/models"
-	"github.com/goldalee/golangprojects/bookings/pkg/render"
+	"github.com/goldalee/golangprojects/bookings/internal/config"
+	"github.com/goldalee/golangprojects/bookings/internal/models"
+	"github.com/goldalee/golangprojects/bookings/internal/render"
 )
 
 //variable that uses the repository type
@@ -112,7 +112,7 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	log.Println(string(out))
+
 	//header
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)

@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/goldalee/golangprojects/bookings/pkg/config"
-	"github.com/goldalee/golangprojects/bookings/pkg/handlers"
+	"github.com/goldalee/golangprojects/bookings/internal/config"
+	"github.com/goldalee/golangprojects/bookings/internal/handlers"
 )
 
 //I had to install pat router by typing in: go get github.com/bmizerany/pat
@@ -36,7 +36,7 @@ func routes(app *config.AppConfig) http.Handler {
 	//Availability routes
 	mux.Get("/search-availability", handlers.Repo.Availability)
 	mux.Post("/search-availability", handlers.Repo.PostAvailability)
-	mux.Get("/search-availability-json", handlers.Repo.AvailabilityJSON)
+	mux.Post("/search-availability-json", handlers.Repo.AvailabilityJSON)
 
 	mux.Get("/contact", handlers.Repo.Contact)
 	mux.Get("/make-reservations", handlers.Repo.Reservation)
