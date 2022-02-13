@@ -1,6 +1,6 @@
 package models
 
-import "github.com/goldalee/bookings/internal/forms"
+import "github.com/goldalee/golangprojects/bookings/internal/forms"
 
 //only exist to be imported
 //TemplateData holds data sent from handlers to templates- the sent data
