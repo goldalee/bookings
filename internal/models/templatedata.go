@@ -1,5 +1,7 @@
 package models
 
+import "github.com/goldalee/bookings/internal/forms"
+
 //only exist to be imported
 //TemplateData holds data sent from handlers to templates- the sent data
 type TemplateData struct {
@@ -11,4 +13,5 @@ type TemplateData struct {
 	Flash     string //just posting success massage to user
 	Warning   string //warning message
 	Error     string //error message
+	Form      *forms.Form
 }

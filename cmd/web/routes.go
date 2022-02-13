@@ -39,7 +39,9 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Post("/search-availability-json", handlers.Repo.AvailabilityJSON)
 
 	mux.Get("/contact", handlers.Repo.Contact)
+
 	mux.Get("/make-reservations", handlers.Repo.Reservation)
+	mux.Post("/make-reservations", handlers.Repo.PostReservation)
 
 	//routing/putting the picture on your page by creating a file server
 	fileServer := http.FileServer(http.Dir("./static/"))
