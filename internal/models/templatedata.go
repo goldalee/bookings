@@ -10,7 +10,7 @@ type TemplateData struct {
 	FloatMap  map[string]float32
 	Data      map[string]interface{}
 	CSRFToken string //cross site request forgery token for security
-	Flash     string //just posting success massage to user
+	Flash     string //just posting success message to user
 	Warning   string //warning message
 	Error     string //error message
 	Form      *forms.Form
