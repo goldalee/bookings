@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
+	"github.com/goldalee/golangprojects/bookings/helpers"
 	"github.com/goldalee/golangprojects/bookings/internal/config"
 	"github.com/goldalee/golangprojects/bookings/internal/handlers"
 	"github.com/goldalee/golangprojects/bookings/internal/models"
@@ -18,6 +20,8 @@ const portNumber = ":8081"
 
 var app config.AppConfig
 var session *scs.SessionManager
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 // main is the main function
 func main() {
@@ -39,10 +43,18 @@ func main() {
 
 func run() error {
 	//what am I going to put into the session
+
 	//gob
 	gob.Register(models.Reservation{})
+
 	//change this to true when in production
 	app.InProduction = false
+
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
 
 	//Sessions
 	session = scs.New()
@@ -68,5 +80,6 @@ func run() error {
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
 	render.NewTemplate(&app)
+	helpers.NewHelpers(&app)
 	return nil
 }
