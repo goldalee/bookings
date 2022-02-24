@@ -7,9 +7,12 @@ import (
 
 	"github.com/goldalee/golangprojects/bookings/helpers"
 	"github.com/goldalee/golangprojects/bookings/internal/config"
+	"github.com/goldalee/golangprojects/bookings/internal/driver"
 	"github.com/goldalee/golangprojects/bookings/internal/forms"
 	"github.com/goldalee/golangprojects/bookings/internal/models"
 	"github.com/goldalee/golangprojects/bookings/internal/render"
+	"github.com/goldalee/golangprojects/bookings/internal/repository"
+	"github.com/goldalee/golangprojects/bookings/internal/repository/dbrepo"
 )
 
 //variable that uses the repository type
@@ -18,12 +21,16 @@ var Repo *Repository
 //the repository pattern - Repository is the reposity type
 type Repository struct {
 	App *config.AppConfig
+	DB repository.DatabaseRepo
 }
 
 //NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB: dbrepo.NewPostgresRepo(db.SQL, a),
+		
+
 	}
 }
 
