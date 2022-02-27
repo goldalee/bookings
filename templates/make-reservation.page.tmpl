@@ -5,10 +5,14 @@
     <div class="row">
 
         <div class="col">
-        <h1>Make Reservation</h1>
+        <h1>Make a Reservation</h1>
+        <p>strong
    {{$res := index .Data "reservation"}}
     <form action="/make-reservation" method="post" class="" novalidate>
      <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+     <input type="hidden" name="start_date" value="{{$res.start_date}}"
+     <input type="hidden" name="end_date" value="{{$res.end_date}}"
+     
        <div class="form-group mt-5">
            <label for="first_name">First name:</label>
            {{with .Form.Errors.Get "first_name"}}
@@ -25,15 +29,7 @@
         <input class="form-control {{with .Form.Errors.Get "last_name"}} is-invalid {{end}}" type="text" name="last_name"  id="last_name" value="{{$res.LastName}}"  required autocomplete="off">
     </div>
 
-<div class="form-group mt-5">
-<label for="start_date">Start Date</label>
-<input type="text" name="start_date" id="start_date" class="form-control">
-</div>
 
-<div class="form-group mt-5">
-<label for="end_date">End Date</label>
-<input type="text" name="end_date" id="end_date" class="form-control">
-</div>
 
 
 <input type="hidden" name="room_id" value="1">
