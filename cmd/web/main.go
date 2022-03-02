@@ -1,26 +1,66 @@
 package main
 
 import (
+	"encoding/gob"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/config"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/handlers"
-	"github.com/goldalee/golangprojects/GoWebDev/pkg/render"
+	"github.com/goldalee/golangprojects/bookings/helpers"
+	"github.com/goldalee/golangprojects/bookings/internal/config"
+	"github.com/goldalee/golangprojects/bookings/internal/driver"
+	"github.com/goldalee/golangprojects/bookings/internal/handlers"
+	"github.com/goldalee/golangprojects/bookings/internal/models"
+	"github.com/goldalee/golangprojects/bookings/internal/render"
 )
 
-const portNumber = ":8080"
+const portNumber = ":8081"
 
 var app config.AppConfig
 var session *scs.SessionManager
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 // main is the main function
 func main() {
 
+	db, err := run()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.SQL.Close()
+
+	fmt.Printf(fmt.Sprintf("Starting application on port #{portNumber}"))
+	srv := &http.Server{
+		Addr:    portNumber,
+		Handler: routes(&app),
+	}
+	err = srv.ListenAndServe()
+	log.Fatal(err)
+}
+
+func run() (*driver.DB, error) {
+	//what am I going to put into the session
+
+	//gob
+	gob.Register(models.Reservation{})
+	gob.Register(models.User{})
+	gob.Register(models.Room{})
+	gob.Register(models.Restriction{})
+
 	//change this to true when in production
 	app.InProduction = false
+
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
 
 	//Sessions
 	session = scs.New()
@@ -33,24 +73,27 @@ func main() {
 
 	app.Session = session
 
+	//connect to database
+	log.Println("Connecting to database...")
+	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=bookings user=postgres password=developer15")
+	if err != nil {
+		log.Fatal("Cannot connect to database! Dying...")
+	}
+	log.Println("Connected to database!")
+
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
-		log.Fatal("cannot create template cache")
+		log.Fatal("Cannot create template cache")
+		return nil, err
 	}
 
 	app.TemplateCache = tc
 	app.UseCache = false
 
 	//setting things up with our handlers
-	repo := handlers.NewRepo(&app)
+	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
-	render.NewTemplate(&app)
-
-	log.Printf("Starting application on port %v", portNumber)
-	srv := &http.Server{
-		Addr:    portNumber,
-		Handler: routes(&app),
-	}
-	err = srv.ListenAndServe()
-	log.Fatal(err)
+	render.NewRenderer(&app)
+	helpers.NewHelpers(&app)
+	return db, nil
 }
