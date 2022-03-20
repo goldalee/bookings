@@ -4,6 +4,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/goldalee/golangprojects/bookings/helpers"
 	"github.com/justinas/nosurf"
 )
 
@@ -34,3 +35,14 @@ func SessionLoad(next http.Handler) http.Handler {
 }
 
 //ne means not equal to - used on the about page in the if
+
+func Auth(next http.Handler)http.Handler{
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+		if !helpers.IsAuthenticated(r){
+			session.Put(r.Context(), "error", "Log in first!")
+			http.Redirect(w,r,"/user/login", http.StatusSeeOther)
+			return 
+		}
+		next.ServeHTTP(w,r)
+	})
+	}

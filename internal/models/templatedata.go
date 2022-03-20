@@ -14,4 +14,5 @@ type TemplateData struct {
 	Warning   string //warning message
 	Error     string //error message
 	Form      *forms.Form
+	IsAuthenticated int
 }

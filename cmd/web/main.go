@@ -17,7 +17,7 @@ import (
 	"github.com/goldalee/golangprojects/bookings/internal/render"
 )
 
-const portNumber = ":8081"
+const portNumber = ":9000"
 
 var app config.AppConfig
 var session *scs.SessionManager
