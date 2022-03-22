@@ -72,32 +72,66 @@ func (m *testDBRepo) AllNewReservations() ([]models.Reservation, error) {
 	return reservations, nil
 }
 
-
 //GetReservation returns one reservation by ID
-func (m *testDBRepo)GetReservationByID(id int)(models.Reservation,error){
+func (m *testDBRepo) GetReservationByID(id int) (models.Reservation, error) {
 	var res models.Reservation
 	return res, nil
 }
-
 
 //UpdateReservation Updates a reservation in the database
 func (m *testDBRepo) UpdateReservation(u models.Reservation) error {
 	return nil
 }
 
-
 //DeleteReservation deletes a reservation in the database
 func (m *testDBRepo) DeleteReservation(id int) error {
 	return nil
 }
-
 
 //UpdateProcessedReservation processed for a reservation by id
 func (m *testDBRepo) UpdateProcessedForReservation(id, processed int) error {
 	return nil
 }
 
-func(m *testDBRepo)AllRooms()([]models.Room, error){
+func (m *testDBRepo) AllRooms() ([]models.Room, error) {
 	var rooms []models.Room
 	return rooms, nil
+}
+
+//GetRestrictionsForRoomByDate returns restrictions for a room by date range
+func (m *testDBRepo) GetRestrictionsForRoomByDate(roomID int, start, end time.Time) ([]models.RoomRestriction, error) {
+
+	var restrictions []models.RoomRestriction
+	// add a block
+	restrictions = append(restrictions, models.RoomRestriction{
+		ID:            1,
+		StartDate:     time.Now(),
+		EndDate:       time.Now().AddDate(0, 0, 1),
+		RoomID:        1,
+		ReservationID: 0,
+		RestrictionID: 2,
+	})
+
+	// add a reservation
+	restrictions = append(restrictions, models.RoomRestriction{
+		ID:            2,
+		StartDate:     time.Now().AddDate(0, 0, 2),
+		EndDate:       time.Now().AddDate(0, 0, 3),
+		RoomID:        1,
+		ReservationID: 1,
+		RestrictionID: 1,
+	})
+	return restrictions, nil
+
+	return restrictions, nil
+}
+
+// InsertBlockForRoom inserts a room restriction
+func (m *testDBRepo) InsertBlockForRoom(id int, startDate time.Time) error {
+	return nil
+}
+
+// DeleteBlockByID deletes a room restriction
+func (m *testDBRepo) DeleteBlockByID(id int) error {
+	return nil
 }
