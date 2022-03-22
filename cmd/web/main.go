@@ -35,10 +35,19 @@ func main() {
 
 	defer db.SQL.Close()
 
-	//defer close(app.MailChan)
+	defer close(app.MailChan)
 
-	//fmt.Println("Staring mail listener...")
-	//listenForMail()
+	fmt.Println("Starting mail listener...")
+	listenForMail()
+
+	//emailing users
+	// from := "me@here.com"
+	// auth := smtp.PlainAuth("", from, "", "localhost")
+	// err = smtp.SendMail("localhost:1025", auth, from, []string{"you@there.com"}, []byte("Hello, world"))
+	// if err != nil{
+	// 	log.Println(err)
+	// }
+	//end of email section
 
 	fmt.Printf(fmt.Sprintf("Starting application on port #{portNumber}"))
 	srv := &http.Server{
@@ -59,8 +68,8 @@ func run() (*driver.DB, error) {
 	gob.Register(models.Restriction{})
 	gob.Register(map[string]int{})
 
-	//	mailChan := make(chan models.MailData)
-	//	app.MailChan = mailChan
+	//mailChan := make(chan models.MailData)
+	//app.MailChan = mailChan
 
 	//change this to true when in production
 	app.InProduction = false
@@ -81,6 +90,11 @@ func run() (*driver.DB, error) {
 	session.Cookie.Secure = app.InProduction //in production make sure it is true
 
 	app.Session = session
+
+
+	//defer close(mailChan)
+
+	//listenForMail()
 
 	//connect to database
 	log.Println("Connecting to database...")

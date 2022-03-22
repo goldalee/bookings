@@ -24,6 +24,14 @@ var session *scs.SessionManager
 var pathToTemplates = "./../../templates"
 var functions = template.FuncMap{}
 
+func listenForMail() {
+	go func() {
+		for {
+			_ = <-app.MailChan
+		}
+	}()
+}
+
 func getRoutes() http.Handler {
 
 	//gob
@@ -47,6 +55,12 @@ func getRoutes() http.Handler {
 	session.Cookie.Secure = app.InProduction //in production make sure it is true
 
 	app.Session = session
+
+	mailChan := make(chan models.MailData)
+	app.MailChan = mailChan
+	defer close(mailChan)
+
+	//listenForMail()
 	//create template cache
 	tc, err := CreateTestTemplateCache()
 	if err != nil {

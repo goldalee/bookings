@@ -1,7 +1,18 @@
 package main
 
-/*
+import (
+	"fmt"
+	"io/ioutil"
+	"log"
+	"strings"
+	"time"
+
+	"github.com/goldalee/golangprojects/bookings/internal/models"
+	mail "github.com/xhit/go-simple-mail"
+)
+
 func listenForMail() {
+	//indefinite loop
 	go func() {
 		for {
 			msg := <-app.MailChan
@@ -44,4 +55,3 @@ func sendMsg(m models.MailData) {
 		log.Println("Email sent!")
 	}
 }
-*/
